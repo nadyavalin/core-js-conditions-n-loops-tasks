@@ -151,69 +151,58 @@ function convertToRomanNumerals(num) {
  *  '1950.2'  => 'one nine five zero point two'
  */
 function convertNumberToString(numberStr) {
-  const numbersWords = [
-    'zero',
-    'one',
-    'two',
-    'three',
-    'four',
-    'five',
-    'six',
-    'seven',
-    'eight',
-    'nine',
-  ];
-
-  let start = 0;
-  let end = numberStr.length - 1;
-
-  while (numberStr[start] === ` `) {
-    start += 1;
-  }
-
-  while (numberStr[end] === ` `) {
-    end -= 1;
-  }
-
-  let string = ``;
-  let firstChar = true;
-  let result = ``;
-
-  for (let i = start; i <= end; i += 1) {
+  let result = '';
+  for (let i = 0; i < numberStr.length; i += 1) {
     const char = numberStr[i];
+    let word = '';
     switch (char) {
+      case '0':
+        word = 'zero';
+        break;
+      case '1':
+        word = 'one';
+        break;
+      case '2':
+        word = 'two';
+        break;
+      case '3':
+        word = 'three';
+        break;
+      case '4':
+        word = 'four';
+        break;
+      case '5':
+        word = 'five';
+        break;
+      case '6':
+        word = 'six';
+        break;
+      case '7':
+        word = 'seven';
+        break;
+      case '8':
+        word = 'eight';
+        break;
+      case '9':
+        word = 'nine';
+        break;
       case '.':
       case ',':
-        string += `point`;
-        firstChar = true;
-        if (result === ``) {
-          result += `${string} `;
-        } else {
-          result += ` ${string}`;
-        }
-        string = ``;
+        word = 'point';
         break;
       case '-':
-        if (firstChar) {
-          string = `minus ${string}`;
-        } else {
-          string += `minus `;
-        }
-        firstChar = false;
-        break;
-      case ' ':
-        if (string !== ``) {
-          result += `${string} `;
-          string = ``;
-        }
+        word = 'minus';
         break;
       default:
-        string += `${numbersWords[parseInt(char, 10)]} `;
-        firstChar = false;
+        break;
+    }
+
+    if (result === '') {
+      result += word;
+    } else {
+      result += ` ${word}`;
     }
   }
-
-  result += string;
   return result;
 }
 
