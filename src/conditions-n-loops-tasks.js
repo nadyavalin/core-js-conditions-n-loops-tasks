@@ -150,8 +150,71 @@ function convertToRomanNumerals(num) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  const numbersWords = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+
+  let start = 0;
+  let end = numberStr.length - 1;
+
+  while (numberStr[start] === ` `) {
+    start += 1;
+  }
+
+  while (numberStr[end] === ` `) {
+    end -= 1;
+  }
+
+  let string = ``;
+  let firstChar = true;
+  let result = ``;
+
+  for (let i = start; i <= end; i += 1) {
+    const char = numberStr[i];
+    switch (char) {
+      case '.':
+      case ',':
+        string += `point`;
+        firstChar = true;
+        if (result === ``) {
+          result += `${string} `;
+        } else {
+          result += ` ${string}`;
+        }
+        string = ``;
+        break;
+      case '-':
+        if (firstChar) {
+          string = `minus ${string}`;
+        } else {
+          string += `minus `;
+        }
+        firstChar = false;
+        break;
+      case ' ':
+        if (string !== ``) {
+          result += `${string} `;
+          string = ``;
+        }
+        break;
+      default:
+        string += `${numbersWords[parseInt(char, 10)]} `;
+        firstChar = false;
+    }
+  }
+
+  result += string;
+  return result;
 }
 
 /**
